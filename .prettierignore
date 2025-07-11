@@ -1,0 +1,12 @@
+# build
+.next
+
+# package
+pnpm-lock.yaml
+
+# markdownlint
+**/*.md
+
+src/test/removeSemicolon/cases/case1.invalid.tsx
+
+dist

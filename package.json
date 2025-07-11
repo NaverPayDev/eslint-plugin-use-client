@@ -1,0 +1,70 @@
+{
+    "name": "@naverpay/eslint-plugin-use-client",
+    "author": "@NaverPayDev/frontend",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NaverPayDev/eslint-plugin-use-client.git"
+    },
+    "bugs": {
+        "url": "https://github.com/NaverPayDev/eslint-plugin-use-client/issues"
+    },
+    "description": "provides a rule to determine if a react server component needs the use client directive",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/esm/index.d.mts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            }
+        },
+        "./package.json": "./package.json"
+    },
+    "sideEffects": false,
+    "files": [
+        "dist"
+    ],
+    "main": "./dist/cjs/index.js",
+    "types": "./dist/cjs/index.d.ts",
+    "module": "./dist/esm/index.mjs",
+    "scripts": {
+        "clean": "rm -rf dist",
+        "build": "pnpm clean && vite build",
+        "release": "pnpm build && pnpm publish",
+        "lint": "eslint '**/*.{ts,mts,cts,tsx,js,mjs,cjs,jsx,yaml,yml}'",
+        "lint:fix": "eslint '**/*.{ts,mts,cts,tsx,js,mjs,cjs,jsx,yaml,yml}' --fix",
+        "stylelint": "stylelint --ignore-path .gitignore '**/*.scss'",
+        "stylelint:fix": "stylelint --ignore-path .gitignore '**/*.scss' --fix",
+        "prettier": "prettier --check '**/*.{ts,mts,cts,tsx,js,mjs,cjs,jsx,json,md}'",
+        "prettier:fix": "prettier --write '**/*.{ts,mts,cts,tsx,js,mjs,cjs,jsx,json,md}'",
+        "markdownlint": "markdownlint '**/*.md'",
+        "markdownlint:fix": "markdownlint --fix '**/*.md'",
+        "test": "vitest run",
+        "extractBrowserApi": "node src/utils/browserApi.js"
+    },
+    "devDependencies": {
+        "@naverpay/editorconfig": "^0.0.4",
+        "@naverpay/eslint-config": "^2.0.0",
+        "@naverpay/markdown-lint": "^0.0.3",
+        "@naverpay/pite": "^2.2.0",
+        "@naverpay/prettier-config": "^1.0.0",
+        "@types/micromatch": "^4.0.9",
+        "@types/node": "^20.12.7",
+        "@types/react": "^19.1.2",
+        "@typescript-eslint/utils": "^8.31.0",
+        "eslint": "^9.24.0",
+        "lefthook": "^1.9.0",
+        "react": "^19.1.0",
+        "stylelint": "^14.2.0",
+        "typescript": "^5.8.3",
+        "vite": "^6.3.5",
+        "vitest": "^3.1.1"
+    },
+    "packageManager": "pnpm@9.12.3",
+    "dependencies": {
+        "micromatch": "^4.0.8"
+    }
+}
