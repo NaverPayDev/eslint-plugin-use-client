@@ -183,7 +183,25 @@ const nodeModuleFiles = [
     'zlib.d.ts',
     'buffer.buffer.d.ts',
 ]
-const nodeSet = nodeModuleFiles.reduce((acc, fileName) => new Set([...acc, ...getNodeSet(fileName)]), new Set())
+
+const ignoreNameList = [
+    'setInterval',
+    'setTimeout',
+    'clearTimeout',
+    'clearInterval',
+    'queueMicrotask',
+    'structuredClone',
+    'atob',
+    'btoa',
+    'fetch',
+].map((name) => name.toLowerCase())
+
+const nodeSetFromFiles = nodeModuleFiles.reduce(
+    (acc, fileName) => new Set([...acc, ...getNodeSet(fileName)]),
+    new Set(),
+)
+
+const nodeSet = new Set([...nodeSetFromFiles, ...ignoreNameList])
 
 const duplicatedApiList = []
 
