@@ -184,7 +184,17 @@ const nodeModuleFiles = [
     'buffer.buffer.d.ts',
 ]
 
-const ignoreNameList = ['setInterval', 'setTimeout'].map((name) => name.toLowerCase())
+const ignoreNameList = [
+    'setInterval',
+    'setTimeout',
+    'clearTimeout',
+    'clearInterval',
+    'queueMicrotask',
+    'structuredClone',
+    'atob',
+    'btoa',
+    'fetch',
+].map((name) => name.toLowerCase())
 
 const nodeSetFromFiles = nodeModuleFiles.reduce(
     (acc, fileName) => new Set([...acc, ...getNodeSet(fileName)]),
