@@ -48,13 +48,22 @@ const rules: Rule.RuleModule = {
                             },
                         ],
                     },
+                    ignoreApis: {
+                        anyOf: [
+                            {type: 'string'},
+                            {
+                                type: 'array',
+                                items: {type: 'string'},
+                            },
+                        ],
+                    },
                 },
                 additionalProperties: false,
             },
         ],
     },
     create(context) {
-        const {ignorePath = []} = context.options[0] || {}
+        const {ignorePath = [], ignoreApis = []} = context.options[0] || {}
         const filePath = path.relative(context.cwd, context.filename)
         const isIgnore = micromatch.isMatch(filePath, ignorePath)
 
@@ -69,6 +78,16 @@ const rules: Rule.RuleModule = {
         const cause = new Set<string>()
 
         const browserGlobals = new Set(browserApiList)
+
+        if (Array.isArray(ignoreApis)) {
+            ignoreApis.forEach((api) => {
+                if (typeof api === 'string') {
+                    browserGlobals.delete(api)
+                }
+            })
+        } else if (typeof ignoreApis === 'string') {
+            browserGlobals.delete(ignoreApis)
+        }
 
         return {
             Program(node) {
