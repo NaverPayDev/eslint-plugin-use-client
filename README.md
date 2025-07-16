@@ -8,7 +8,9 @@ This ESLint plugin provides rules to determine if a React Server Component needs
 
 - 🔍 **Automatic Detection**: Detects when client-side features are used in React components
 - 🔧 **Auto-fix**: Automatically adds `'use client'` directive when needed
+- 🎯 **Three Rule Types**: Covers React hooks, browser APIs, and event handlers
 - ⚙️ **Configurable**: Supports ignore paths for specific files or patterns
+- 🎛️ **API Filtering**: Exclude specific browser APIs from detection (browser-api rule)
 - 🚀 **Next.js Ready**: Perfect for Next.js 13+ App Router with React Server Components
 
 ## Installation
@@ -150,7 +152,11 @@ function MyComponent() {
 
 ## Configuration
 
-Each rule supports an `ignorePath` option to exclude specific files or patterns:
+Each rule supports configuration options to customize its behavior:
+
+### `ignorePath` Option
+
+Exclude specific files or patterns from being checked:
 
 ```javascript
 {
@@ -164,7 +170,53 @@ Each rule supports an `ignorePath` option to exclude specific files or patterns:
     'use-client/browser-api': ['error', {
       ignorePath: 'src/lib/**'
     }],
-    'use-client/event-handler': ['error']
+    'use-client/event-handler': ['error', {
+      ignorePath: [
+        'src/pages/**',
+        'src/app/**/page.tsx'
+      ]
+    }]
+  }
+}
+```
+
+### `ignoreApis` Option (browser-api rule only)
+
+Exclude specific API names from being detected by the `browser-api` rule:
+
+```javascript
+{
+  rules: {
+    'use-client/browser-api': ['error', {
+      ignoreApis: [
+        'console',
+        'fetch',
+        'setTimeout'
+      ]
+    }]
+  }
+}
+```
+
+This is useful when you want to allow certain browser APIs in server components. For example:
+
+```tsx
+// This won't trigger the rule if 'console' is in ignoreApis
+function ServerComponent() {
+  console.log('This is allowed') // No error
+  
+  return <div>Server Component</div>
+}
+```
+
+You can also specify a single API name as a string:
+
+```javascript
+{
+  rules: {
+    'use-client/browser-api': ['error', {
+      ignoreApis: 'console'
+    }]
   }
 }
 ```
